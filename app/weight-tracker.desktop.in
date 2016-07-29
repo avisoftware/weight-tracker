@@ -1,0 +1,10 @@
+[Desktop Entry]
+_Name=Weight Tracker
+_Comment=Weight Tracker is is an app that allows you to track your weight, including BMI Status.
+Exec=@EXEC@
+Icon=@ICON@
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true
+X-Ubuntu-Splash-Image=@ICON@
+X-Ubuntu-Splash-Color=#32B35A
