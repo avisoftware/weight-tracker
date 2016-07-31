@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-31 11:25+0000\n"
+"POT-Creation-Date: 2016-07-31 11:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgid "About"
 msgstr ""
 
 #: ../app/AboutPage.qml:64
-msgid "Weight Tracker v0.2 (Beta)"
+msgid "Weight Tracker v0.3 (Beta)"
 msgstr ""
 
 #: ../app/AboutPage.qml:81
