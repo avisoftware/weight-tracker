@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.4
 import Ubuntu.Components 1.3
 import QtQuick.LocalStorage 2.0
 import Ubuntu.Components.Popups 1.3
@@ -11,41 +11,49 @@ Item {
     property int tipBMI: 0
     property int bmiClass: 0
     property string weightDirection: ""
-    property bool isWide: rowLeft.width*2<rect.width
     Item{
-        id:leftSide
+        id:topSide
         height: (parent.height /3)*2
-        width: isWide ? parent.width /2:leftRect.width
+        width:  parent.width
         anchors{
             top:parent.top
-            left: parent.left
+            horizontalCenter:  parent.horizontalCenter
         }
         Item{
-            id: leftRect
-            height: parent.height
-            width:rowLeft.implicitWidth
+            id:titleItem
+            height: weightTitelLabel.height
+            width:  parent.width
             anchors{
                 top:parent.top
-                left: isWide ? undefined : parent.left
-                right: isWide ? parent.right : undefined
+                horizontalCenter:  parent.horizontalCenter
             }
             Label{
                 id: weightTitelLabel
-                anchors.bottom:  parent.bottom
-                anchors.horizontalCenter:  parent.horizontalCenter
+                anchors{
+                    bottom:parent.bottom
+                    horizontalCenter:  parent.horizontalCenter
+                }
                 text:lastWeight > 0 ? i18n.tr("Your last weight from ")+Storage.findLastDate(settings.userId) : ""
                 fontSize: "small"
                 color:Qt.darker( UbuntuColors.green)
             }
-
+        }
+        Item{
+            id: weigthItem
+            height: parent.height -titleItem.height
+            width:rowLeft.implicitWidth
+            anchors{
+                top: titleItem.bottom
+                horizontalCenter:  parent.horizontalCenter
+            }
             Row{
                 id: rowLeft
                 anchors.centerIn:  parent
                 Item{
                     id: weightDirectionItem
-                    height: parent.height
-                    width: upIcon.implicitWidth
-                    anchors.bottom: parent.bottom
+                     height: upIcon.height*2
+                    width: upIcon.width
+                    anchors.verticalCenter: parent.verticalCenter
                     Icon{
                         id: upIcon
                         anchors.bottom: downIcon.top
@@ -100,23 +108,22 @@ Item {
                     width: weightLabel.implicitWidth
                     Label {
                         id: weightLabel
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: units.dp(-15)
+                        anchors.verticalCenter: parent.verticalCenter
                         anchors.horizontalCenter: parent.horizontalCenter
                         text:lastWeight > 0 ? lastWeight.toString().replace(".", Qt.locale().decimalPoint) : "--"
-                        font.pixelSize:  units.dp(110)
+                        font.pixelSize: lastWeight>99.9?units.dp(90): units.dp(110)
                         color:Qt.darker( UbuntuColors.green)
                     }
                 }
-                Item{
+                Rectangle{
                     id: kgTipItem
                     anchors.bottom: parent.bottom
-                    height: weightLabel.implicitHeight
+                    height: t_metrics.tightBoundingRect.height
                     width: kgTipLabel.implicitWidth>kgLable.implicitWidth ? kgTipLabel.implicitWidth:kgLable.implicitWidth
                     Label {
                         id : kgTipLabel
                         height: parent.height/2
-                        anchors.bottom: parent.bottom
+                        anchors.top: parent.top
                         anchors.horizontalCenter: parent.horizontalCenter
                         opacity: 0.5
                         text:{
@@ -177,24 +184,28 @@ Item {
                         color: Qt.darker( UbuntuColors.green)
                     }
                 }
+                TextMetrics {
+                        id:     t_metrics
+                        font:   weightLabel.font
+                        text:   weightLabel.text
+                    }
             }
         }
     }
     Item{
-        id: rightSide
+        id: bottomSide
         height: parent.height /3
         width : parent.width /2
         anchors{
             bottom:parent.bottom
-            right: parent.right
+            horizontalCenter: parent.horizontalCenter
+
         }
         Item{
-            id: rightRect
+            id: bottomRect
             height: parent.height
-            width: leftRect.width
             anchors{
-                top:parent.top
-                left:  parent.left
+                centerIn: parent
             }
             Label{
                 id: bmiTitelLabel
@@ -319,7 +330,7 @@ Item {
                         if(typeS==="up"){
                             i18n.tr("Your weight increased from the last time")
                         }else if(typeS==="down"){
-                           i18n.tr( "Your weight decreased from last time")
+                            i18n.tr( "Your weight decreased from last time")
                         }else if(typeS==="same"){
                             i18n.tr("Your weight same as last time")
                         }else if(typeS==="plusWeight"){
