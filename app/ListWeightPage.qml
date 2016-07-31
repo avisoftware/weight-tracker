@@ -51,7 +51,7 @@ Page {
                                       Action {
                                           iconName: "delete"
                                           onTriggered: {
-                                             if( Storage.deleteWeight(date,settings.userId)==="OK"){
+                                             if( Storage.deleteWeight(Qt.formatDate(date,"yyyy-MM-dd"),settings.userId)==="OK"){
                                                 updateView();
                                                  mainPage.updateView()
                                              }
@@ -61,7 +61,7 @@ Page {
                                   ]
                               }
                    ListItemLayout {
-                       title.text: date
+                       title.text:Qt.formatDate(date,Qt.SystemLocaleShortDate)
                        title.color:Qt.darker( UbuntuColors.green)
                        Label {
                            text: {

@@ -6,6 +6,7 @@ import Ubuntu.Components.Popups 1.3
 
 import "js/Storage.js" as Storage
 Page {
+    property alias selectedDate : dateTextField.date
     height: bottomEdge.height
     header: PageHeader {
         title: i18n.tr("Insert new weigth")
@@ -48,7 +49,7 @@ Page {
                 Button{
                     SlotsLayout.position: SlotsLayout.Last
                     id: dateTextField
-                    text : Qt.formatDateTime(date, "yyyy-MM-dd")
+                    text :Qt.formatDate(date,Qt.SystemLocaleShortDate)
                     color: UbuntuColors.darkGrey
                     anchors.left:   parent.left
                     anchors.rightMargin:  units.gu(2)
@@ -64,14 +65,14 @@ Page {
             color: UbuntuColors.green
             onClicked: {
                 if(weightTextField.text>0){
-                    if(!Storage.checkDateExist(dateTextField.text,settings.userId)){
-                        var r= Storage.setWeight (weightTextField.text,dateTextField.text,settings.userId);
+                    if(!Storage.checkDateExist(Qt.formatDate(selectedDate,"yyyy-MM-dd"),settings.userId)){
+                        var r= Storage.setWeight (weightTextField.text,Qt.formatDate(selectedDate,"yyyy-MM-dd"),settings.userId);
                         closePage();
                     }else{
                         PopupUtils.open(dialog, null,{"typeDialog":"update"});
                     }
                 }else if (weightTextField.text===0||weightTextField.text===""){
-                    if(!Storage.checkDateExist(dateTextField.text,settings.userId)){
+                    if(!Storage.checkDateExist(Qt.formatDate(selectedDate,"yyyy-MM-dd"),settings.userId)){
 
                     }else{
                         PopupUtils.open(dialog, null,{"typeDialog":"delete"});
@@ -125,9 +126,9 @@ Page {
                     onClicked: {
                         var r;
                         if(typeDialog==="update"){
-                             r= Storage.updateWeight (weightTextField.text,dateTextField.text,settings.userId);
+                             r= Storage.updateWeight (weightTextField.text,Qt.formatDate(selectedDate,"yyyy-MM-dd"),settings.userId);
                         }else if(typeDialog==="delete") {
-                            r= Storage.deleteWeight (dateTextField.text,settings.userId);
+                            r= Storage.deleteWeight (Qt.formatDate(selectedDate,"yyyy-MM-dd"),settings.userId);
                         }
                         PopupUtils.close(dialogue)
                         saveButton.closePage();

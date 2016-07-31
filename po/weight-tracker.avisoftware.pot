@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 04:34+0000\n"
+"POT-Creation-Date: 2016-07-31 04:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,49 +102,49 @@ msgstr ""
 msgid "history"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:11
+#: ../app/NewWeightComponent.qml:12
 msgid "Insert new weigth"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:28
+#: ../app/NewWeightComponent.qml:29
 msgid "Your Weight:"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:30
+#: ../app/NewWeightComponent.qml:31
 msgid "Leave empty to delete weight"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:46
+#: ../app/NewWeightComponent.qml:47
 msgid "Date:"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:62
+#: ../app/NewWeightComponent.qml:63
 msgid "Save"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:94 ../app/NewWeightComponent.qml:96
+#: ../app/NewWeightComponent.qml:95 ../app/NewWeightComponent.qml:97
 msgid "Date exist"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:101
+#: ../app/NewWeightComponent.qml:102
 msgid ""
 "On this date you already have a weight,\n"
 " do you want to update to the new weigth?"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:103
+#: ../app/NewWeightComponent.qml:104
 msgid "Are you sure you want to delete this entry?"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:112 ../app/UserComponent.qml:240
+#: ../app/NewWeightComponent.qml:113 ../app/UserComponent.qml:240
 msgid "Cancel"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:119
+#: ../app/NewWeightComponent.qml:120
 msgid "Update"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:121 ../app/UserComponent.qml:231
+#: ../app/NewWeightComponent.qml:122 ../app/UserComponent.qml:231
 msgid "Delete"
 msgstr ""
 

@@ -50,7 +50,7 @@ function findLastDate(userId) {
     db.transaction(function(tx) {
         var rs = tx.executeSql('SELECT * FROM weight WHERE userId=? ORDER BY date DESC;',[userId]);
         if(rs.rows.length>0){
-            lastDate=Qt.formatDate(rs.rows.item(0).date,"dd.MM.yy")
+            lastDate=Qt.formatDate(rs.rows.item(0).date,Qt.SystemLocaleShortDate)
         }
     }
     )
