@@ -71,7 +71,7 @@ Page {
                                }else{
                                    units= i18n.tr("LB");
                                }
-                               weight+" "+units}
+                               weight.toString().replace(".", Qt.locale().decimalPoint)+" "+units}
                            color:Qt.darker( UbuntuColors.green)
                        }
                    }

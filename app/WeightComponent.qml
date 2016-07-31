@@ -103,7 +103,7 @@ Item {
                         anchors.bottom: parent.bottom
                         anchors.bottomMargin: units.dp(-15)
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text:lastWeight > 0 ? lastWeight : "--"
+                        text:lastWeight > 0 ? lastWeight.toString().replace(".", Qt.locale().decimalPoint) : "--"
                         font.pixelSize:  units.dp(110)
                         color:Qt.darker( UbuntuColors.green)
                     }

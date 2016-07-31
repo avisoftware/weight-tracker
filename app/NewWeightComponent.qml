@@ -11,9 +11,9 @@ Page {
     header: PageHeader {
         title: i18n.tr("Insert new weigth")
         StyleHints {
-                foregroundColor:Qt.darker( UbuntuColors.green)
-                dividerColor: Qt.darker( UbuntuColors.green)
-            }
+            foregroundColor:Qt.darker( UbuntuColors.green)
+            dividerColor: Qt.darker( UbuntuColors.green)
+        }
     }
     Column {
         spacing: units.gu(1)
@@ -32,10 +32,38 @@ Page {
                 subtitle.color: Qt.darker( UbuntuColors.green)
                 TextField {
                     id: weightTextField
+                    property double value;
                     SlotsLayout.position: SlotsLayout.Last
-                    width:units.gu(10)
-                    validator:  DoubleValidator {decimals: 1}
+                    width:units.gu(15)
+                    text: value === 0?"":value
+                    focus: true
+                    validator:  DoubleValidator {
+                        id: doubleValidator;
+                        decimals: 1
+                    }
                     inputMethodHints:Qt.ImhFormattedNumbersOnly
+                    //NOTE: this solution came to solve this bug
+                    //https://bugreports.qt.io/browse/QTBUG-37906
+                    //when it will be fixed i will change it
+                    onTextChanged: {
+                        if (acceptableInput) {
+                            value = parseFloat(text.replace(Qt.locale().decimalPoint, "."))
+                        }
+                        else if (text === "") {
+                            value = 0
+                            selectValue()
+                        }
+                    }
+                    onDisplayTextChanged: {
+                        text = displayText.replace(".", Qt.locale().decimalPoint)
+                    }
+
+                    onActiveFocusChanged: if (activeFocus) selectValue()
+
+                    function selectValue() {
+                        cursorPosition = 0
+                        selectAll()
+                    }
                 }
             }
         }
@@ -64,14 +92,14 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             color: UbuntuColors.green
             onClicked: {
-                if(weightTextField.text>0){
+                if(weightTextField.value>0){
                     if(!Storage.checkDateExist(Qt.formatDate(selectedDate,"yyyy-MM-dd"),settings.userId)){
-                        var r= Storage.setWeight (weightTextField.text,Qt.formatDate(selectedDate,"yyyy-MM-dd"),settings.userId);
+                        var r= Storage.setWeight (weightTextField.value,Qt.formatDate(selectedDate,"yyyy-MM-dd"),settings.userId);
                         closePage();
                     }else{
                         PopupUtils.open(dialog, null,{"typeDialog":"update"});
                     }
-                }else if (weightTextField.text===0||weightTextField.text===""){
+                }else if (weightTextField.value===0||weightTextField.value===""){
                     if(!Storage.checkDateExist(Qt.formatDate(selectedDate,"yyyy-MM-dd"),settings.userId)){
 
                     }else{
@@ -126,7 +154,7 @@ Page {
                     onClicked: {
                         var r;
                         if(typeDialog==="update"){
-                             r= Storage.updateWeight (weightTextField.text,Qt.formatDate(selectedDate,"yyyy-MM-dd"),settings.userId);
+                            r= Storage.updateWeight (weightTextField.value,Qt.formatDate(selectedDate,"yyyy-MM-dd"),settings.userId);
                         }else if(typeDialog==="delete") {
                             r= Storage.deleteWeight (Qt.formatDate(selectedDate,"yyyy-MM-dd"),settings.userId);
                         }
