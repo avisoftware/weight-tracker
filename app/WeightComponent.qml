@@ -12,44 +12,47 @@ Item {
     property int bmiClass: 0
     property string weightDirection: ""
     property double avgWeight: 0.0
+    property bool isWide: rowLeft.width *2 < parent.width
+    property bool isShort:units.gu(40)> parent.height; //short mean lanscape
     Item{
         id:topSide
-        height: (parent.height /3)*2
-        width:  parent.width
+        height: isWide ?parent.height:(parent.height /5)*3
+        width:  isWide ?parent.width/2: parent.width
         anchors{
-            top:parent.top
-            horizontalCenter:  parent.horizontalCenter
+            top:isWide ?undefined:parent.top
+            horizontalCenter: isWide ? undefined : parent.horizontalCenter
+            verticalCenter: isWide ?  parent.verticalCenter:undefined
+            left: isWide ? parent.left :undefined
         }
-        Item{
-            id:titleItem
-            height: weightTitelLabel.height
-            width:  parent.width
-            anchors{
-                top:parent.top
-                horizontalCenter:  parent.horizontalCenter
-            }
-            Label{
-                id: weightTitelLabel
-                anchors{
-                    bottom:parent.bottom
-                    horizontalCenter:  parent.horizontalCenter
-                }
-                text:lastWeight > 0 ? i18n.tr("Your last weight from ")+Storage.findLastDate(settings.userId) : ""
-                fontSize: "small"
-                color:Qt.darker( UbuntuColors.green)
-            }
-        }
-        Item{
+
+        Rectangle{
             id: weigthItem
-            height: parent.height -titleItem.height
+            height: t_metrics.tightBoundingRect.height+titleItem.height
             width:rowLeft.implicitWidth
             anchors{
-                top: titleItem.bottom
-                horizontalCenter:  parent.horizontalCenter
+                centerIn: parent
+            }
+            Item{
+                id:titleItem
+                height: weightTitelLabel.height
+                width:  parent.width
+                anchors{
+                    top:parent.top
+                    horizontalCenter:  parent.horizontalCenter
+                }
+                Label{
+                    id: weightTitelLabel
+                    anchors{
+                        centerIn: parent
+                    }
+                    text:lastWeight > 0 ? i18n.tr("Your last weight from ")+Storage.findLastDate(settings.userId) : ""
+                    fontSize: "small"
+                    color:Qt.darker( UbuntuColors.green)
+                }
             }
             Row{
                 id: rowLeft
-                anchors.centerIn:  parent
+                anchors.top:  titleItem.bottom
                 Item{
                     id: weightDirectionItem
                     height: upIcon.height*2
@@ -116,7 +119,7 @@ Item {
                         color:Qt.darker( UbuntuColors.green)
                     }
                 }
-                Rectangle{
+                Item{
                     id: kgTipItem
                     anchors.bottom: parent.bottom
                     height: t_metrics.tightBoundingRect.height
@@ -195,41 +198,48 @@ Item {
     }
     Item{
         id: bottomSide
-        height: parent.height /3
-        width : parent.width ///2
+        height: isWide?parent.height:  (parent.height /5)*2
+        width :isWide? parent.width/2:parent.width
         anchors{
-            bottom:parent.bottom
-            horizontalCenter: parent.horizontalCenter
-
+            bottom: isWide?undefined: parent.bottom
+            horizontalCenter: isWide?undefined:parent.horizontalCenter
+            top :isWide? parent.top:undefined
+            right: isWide? parent.right:undefined
         }
         Item {
             id:rightBottomSide
-            height: parent.height
-            width : parent.width /2
+            height:isWide? parent.height/2:parent.height
+            width :isWide?parent.width:  parent.width /2
             anchors{
-                bottom:parent.bottom
+                bottom:isWide?undefined:parent.bottom
+                top:isWide?parent.top:undefined
                 right: parent.right
             }
 
             Item{
                 id: bmiRect
-                height: parent.height
+                height:bmiTitle.height+bmiLabel.height+statusLabel.height
                 anchors{
                     centerIn: parent
                 }
-                Label{
-                    id: bmiTitelLabel
-                    anchors.top:  parent.top
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text:lastWeight > 0 ? i18n.tr("Your BMI"):""
-                    fontSize: "small"
-                    color:Qt.darker( UbuntuColors.green)
+                Item{
+                    id: bmiTitle
+                    height: bmiTitelLabel.height
+                    anchors.top:parent.top
+                    Label{
+                        id: bmiTitelLabel
+                        anchors.top:  parent.top
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text:lastWeight > 0 ? i18n.tr("Your BMI"):""
+                        fontSize: "small"
+                        color:Qt.darker( UbuntuColors.green)
+                    }
                 }
                 Item{
-                    height: parent.height
+                    height: parent.height - bmiTitle.height
                     width: bmiLabel.implicitWidth > statusLabel.implicitWidth ? bmiLabel.implicitWidth:statusLabel.implicitWidth
                     anchors{
-                        top:parent.top
+                        top:bmiTitle.bottom
                         horizontalCenter: parent.horizontalCenter
                     }
                     Item{
@@ -242,10 +252,9 @@ Item {
                         }
                         Label {
                             id: bmiLabel
-                            anchors.bottom: parent.bottom
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.centerIn: parent
                             text:lastBMI > 0 ? lastBMI : "--"
-                            font.pixelSize:  units.dp(40)
+                            font.pixelSize: isShort? units.dp(30):units.dp(40)
                             color:statusLabel.color
                         }
                     }
@@ -323,15 +332,15 @@ Item {
         }
         Item {
             id:leftBottomSide
-            height: parent.height
-            width : parent.width /2
+            height:isWide? parent.height/2:parent.height
+            width :isWide?parent.width:  parent.width /2
             anchors{
                 bottom:parent.bottom
                 left: parent.left
             }
             Item{
                 id: avgRect
-                height: parent.height
+                height: avgTitelLabel.height+avgLabel.height
                 anchors{
                     centerIn: parent
                 }
@@ -344,58 +353,56 @@ Item {
                         anchors.top:  parent.top
                         anchors.horizontalCenter: parent.horizontalCenter
                         property string periodStr: i18n.tr("last month")
-                        text:lastWeight > 0 ? i18n.tr("Your average weight\nin the %1").arg(periodStr):""
+                        property string str: isShort?i18n.tr("Average %1").arg(periodStr) :i18n.tr("Your average weight\nin the %1").arg(periodStr)
+                        text:lastWeight > 0 ? str:""
                         fontSize: "small"
                         horizontalAlignment: Text.AlignHCenter
                         color:Qt.darker( UbuntuColors.green)
                     }
                 }
                 Item{
-                    height: parent.height -avgTitle.height
+                    id:avgItem
+                    height:avgLabel.height
                     width: avgTitelLabel.width> avgLabel.width ? avgLabel.width:avgTitelLabel.width
                     anchors{
                         top:avgTitle.bottom
                         horizontalCenter: parent.horizontalCenter
                     }
-                    Item{
-                        id: avgItem
-                        height: parent.height
-                        width: avgLabel.width + unitsLabel.width
-                        anchors{
-                            top:parent.top
-                            horizontalCenter: parent.horizontalCenter
-                        }
-                        Label {
-                            id: avgLabel
-                            anchors.centerIn:   parent
-                            text:avgWeight > 0.0 ? avgWeight.toFixed(2) : "-"
-                            font.pixelSize:  units.dp(40)
-                            color:Qt.darker(UbuntuColors.green)
-                        }
-                        Label {
-                            id:unitsLabel
-                            anchors.bottom: parent.bottom
-                            anchors.left: avgLabel.right
-                            anchors.bottomMargin: (parent.height/2)-unitsLabel.height
-                            text:{
-                                if (avgWeight > 0.0){
-                                    if(settings.unit ===0){
-                                        return i18n.tr("KG");
-                                    }else{
-                                        return i18n.tr("LB");
-                                    }
+
+                    Label {
+                        id: avgLabel
+                        anchors.centerIn:   parent
+                        text:avgWeight > 0.0 ? avgWeight.toFixed(2) : "-"
+                        font.pixelSize:   isShort? units.dp(30):units.dp(40)
+                        color:Qt.darker(UbuntuColors.green)
+                    }
+                    Label {
+                        id:unitsLabel
+                        anchors.bottom: parent.bottom
+                        anchors.left: avgLabel.right
+                        anchors.bottomMargin: (parent.height/2)-unitsLabel.height
+                        text:{
+                            if (avgWeight > 0.0){
+                                if(settings.unit ===0){
+                                    return i18n.tr("KG");
                                 }else{
-                                    ""
+                                    return i18n.tr("LB");
                                 }
+                            }else{
+                                ""
                             }
-                            fontSize: "medium"
-                            color: Qt.darker(UbuntuColors.green)
                         }
+                        fontSize: "medium"
+                        color: Qt.darker(UbuntuColors.green)
                     }
                 }
             }
         }
     }
+    Component.onCompleted: {
+        //isShort=
+    }
+
     Component {
         id: popover
         Popover {
