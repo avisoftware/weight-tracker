@@ -11,6 +11,7 @@ Item {
     property int tipBMI: 0
     property int bmiClass: 0
     property string weightDirection: ""
+    property double avgWeight: 0.0
     Item{
         id:topSide
         height: (parent.height /3)*2
@@ -51,7 +52,7 @@ Item {
                 anchors.centerIn:  parent
                 Item{
                     id: weightDirectionItem
-                     height: upIcon.height*2
+                    height: upIcon.height*2
                     width: upIcon.width
                     anchors.verticalCenter: parent.verticalCenter
                     Icon{
@@ -185,126 +186,210 @@ Item {
                     }
                 }
                 TextMetrics {
-                        id:     t_metrics
-                        font:   weightLabel.font
-                        text:   weightLabel.text
-                    }
+                    id:     t_metrics
+                    font:   weightLabel.font
+                    text:   weightLabel.text
+                }
             }
         }
     }
     Item{
         id: bottomSide
         height: parent.height /3
-        width : parent.width /2
+        width : parent.width ///2
         anchors{
             bottom:parent.bottom
             horizontalCenter: parent.horizontalCenter
 
         }
-        Item{
-            id: bottomRect
+        Item {
+            id:rightBottomSide
             height: parent.height
+            width : parent.width /2
             anchors{
-                centerIn: parent
+                bottom:parent.bottom
+                right: parent.right
             }
-            Label{
-                id: bmiTitelLabel
-                anchors.top:  parent.top
-                anchors.horizontalCenter: parent.horizontalCenter
-                text:lastWeight > 0 ? i18n.tr("Your BMI"):""
-                fontSize: "small"
-                color:Qt.darker( UbuntuColors.green)
-            }
+
             Item{
+                id: bmiRect
                 height: parent.height
-                width: bmiLabel.implicitWidth > statusLabel.implicitWidth ? bmiLabel.implicitWidth:statusLabel.implicitWidth
                 anchors{
-                    top:parent.top
-                    horizontalCenter: parent.horizontalCenter
+                    centerIn: parent
+                }
+                Label{
+                    id: bmiTitelLabel
+                    anchors.top:  parent.top
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text:lastWeight > 0 ? i18n.tr("Your BMI"):""
+                    fontSize: "small"
+                    color:Qt.darker( UbuntuColors.green)
                 }
                 Item{
-                    id: bmiItem
-                    height: (parent.height /3)*2
-                    width: bmiLabel.implicitWidth
+                    height: parent.height
+                    width: bmiLabel.implicitWidth > statusLabel.implicitWidth ? bmiLabel.implicitWidth:statusLabel.implicitWidth
                     anchors{
                         top:parent.top
                         horizontalCenter: parent.horizontalCenter
                     }
-                    Label {
-                        id: bmiLabel
-                        anchors.bottom: parent.bottom
+                    Item{
+                        id: bmiItem
+                        height: (parent.height /3)*2
+                        width: bmiLabel.implicitWidth
+                        anchors{
+                            top:parent.top
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                        Label {
+                            id: bmiLabel
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text:lastBMI > 0 ? lastBMI : "--"
+                            font.pixelSize:  units.dp(40)
+                            color:statusLabel.color
+                        }
+                    }
+                    Item{
+                        id: statusItem
+                        height: parent.height /3
+                        width: statusLabel.implicitWidth
+                        anchors{
+                            bottom:parent.bottom
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                        Label {
+                            id:statusLabel
+                            anchors.top: parent.top
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text:{
+                                switch (bmiClass){
+                                case BMI.BMIClass.VERY_SEVERELY_UNDERWEIGHT:
+                                    i18n.tr("Very Severely Underweight");
+                                    break;
+                                case BMI.BMIClass.SEVERELY_UNDERWEIGHT:
+                                    i18n.tr("Severely Underweight")
+                                    break;
+                                case BMI.BMIClass.UNDERWEIGHT:
+                                    i18n.tr("Underweight")
+                                    break;
+                                case BMI.BMIClass.NORMAL:
+                                    i18n.tr("Normal")
+                                    break;
+                                case BMI.BMIClass.OVERWEIGHT:
+                                    i18n.tr("Overweight")
+                                    break;
+                                case BMI.BMIClass.OBESE:
+                                    i18n.tr("Obese")
+                                    break;
+                                case BMI.BMIClass.OBESE_CLASS_I:
+                                    i18n.tr("Obese Class I")
+                                    break;
+                                case BMI.BMIClass.OBESE_CLASS_II:
+                                    i18n.tr("Obese Class II")
+                                    break;
+                                case BMI.BMIClass.OBESE_CLASS_III:
+                                    i18n.tr("Obese Class III")
+                                    break;
+                                default:
+                                    ""
+                                }
+                            }
+                            fontSize: "medium"
+                            color: {
+                                switch (bmiClass){
+                                case BMI.BMIClass.VERY_SEVERELY_UNDERWEIGHT:
+                                case BMI.BMIClass.SEVERELY_UNDERWEIGHT:
+                                case BMI.BMIClass.UNDERWEIGHT:
+                                    Qt.darker( UbuntuColors.orange)
+                                    break;
+                                case BMI.BMIClass.NORMAL:
+                                    Qt.darker( UbuntuColors.green)
+                                    break;
+                                case BMI.BMIClass.OVERWEIGHT:
+                                case BMI.BMIClass.OBESE:
+                                case BMI.BMIClass.OBESE_CLASS_I:
+                                case BMI.BMIClass.OBESE_CLASS_II:
+                                case BMI.BMIClass.OBESE_CLASS_III:
+                                    Qt.darker( UbuntuColors.red)
+                                    break;
+                                default:
+                                    Qt.darker( UbuntuColors.green)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Item {
+            id:leftBottomSide
+            height: parent.height
+            width : parent.width /2
+            anchors{
+                bottom:parent.bottom
+                left: parent.left
+            }
+            Item{
+                id: avgRect
+                height: parent.height
+                anchors{
+                    centerIn: parent
+                }
+                Item{
+                    id: avgTitle
+                    height: avgTitelLabel.height
+                    anchors.top:parent.top
+                    Label{
+                        id: avgTitelLabel
+                        anchors.top:  parent.top
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text:lastBMI > 0 ? lastBMI : "--"
-                        font.pixelSize:  units.dp(40)
-                        color:statusLabel.color
+                        property string periodStr: i18n.tr("last month")
+                        text:lastWeight > 0 ? i18n.tr("Your average weight\nin the %1").arg(periodStr):""
+                        fontSize: "small"
+                        horizontalAlignment: Text.AlignHCenter
+                        color:Qt.darker( UbuntuColors.green)
                     }
                 }
                 Item{
-                    id: statusItem
-                    height: parent.height /3
-                    width: statusLabel.implicitWidth
+                    height: parent.height -avgTitle.height
+                    width: avgTitelLabel.width> avgLabel.width ? avgLabel.width:avgTitelLabel.width
                     anchors{
-                        bottom:parent.bottom
+                        top:avgTitle.bottom
                         horizontalCenter: parent.horizontalCenter
                     }
-                    Label {
-                        id:statusLabel
-                        anchors.top: parent.top
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text:{
-                            switch (bmiClass){
-                            case BMI.BMIClass.VERY_SEVERELY_UNDERWEIGHT:
-                                i18n.tr("Very Severely Underweight");
-                                break;
-                            case BMI.BMIClass.SEVERELY_UNDERWEIGHT:
-                                i18n.tr("Severely Underweight")
-                                break;
-                            case BMI.BMIClass.UNDERWEIGHT:
-                                i18n.tr("Underweight")
-                                break;
-                            case BMI.BMIClass.NORMAL:
-                                i18n.tr("Normal")
-                                break;
-                            case BMI.BMIClass.OVERWEIGHT:
-                                i18n.tr("Overweight")
-                                break;
-                            case BMI.BMIClass.OBESE:
-                                i18n.tr("Obese")
-                                break;
-                            case BMI.BMIClass.OBESE_CLASS_I:
-                                i18n.tr("Obese Class I")
-                                break;
-                            case BMI.BMIClass.OBESE_CLASS_II:
-                                i18n.tr("Obese Class II")
-                                break;
-                            case BMI.BMIClass.OBESE_CLASS_III:
-                                i18n.tr("Obese Class III")
-                                break;
-                            default:
-                                ""
-                            }
+                    Item{
+                        id: avgItem
+                        height: parent.height
+                        width: avgLabel.width + unitsLabel.width
+                        anchors{
+                            top:parent.top
+                            horizontalCenter: parent.horizontalCenter
                         }
-                        fontSize: "medium"
-                        color: {
-                            switch (bmiClass){
-                            case BMI.BMIClass.VERY_SEVERELY_UNDERWEIGHT:
-                            case BMI.BMIClass.SEVERELY_UNDERWEIGHT:
-                            case BMI.BMIClass.UNDERWEIGHT:
-                                Qt.darker( UbuntuColors.orange)
-                                break;
-                            case BMI.BMIClass.NORMAL:
-                                Qt.darker( UbuntuColors.green)
-                                break;
-                            case BMI.BMIClass.OVERWEIGHT:
-                            case BMI.BMIClass.OBESE:
-                            case BMI.BMIClass.OBESE_CLASS_I:
-                            case BMI.BMIClass.OBESE_CLASS_II:
-                            case BMI.BMIClass.OBESE_CLASS_III:
-                                Qt.darker( UbuntuColors.red)
-                                break;
-                            default:
-                                Qt.darker( UbuntuColors.green)
+                        Label {
+                            id: avgLabel
+                            anchors.centerIn:   parent
+                            text:avgWeight > 0.0 ? avgWeight.toFixed(2) : "-"
+                            font.pixelSize:  units.dp(40)
+                            color:Qt.darker(UbuntuColors.green)
+                        }
+                        Label {
+                            id:unitsLabel
+                            anchors.bottom: parent.bottom
+                            anchors.left: avgLabel.right
+                            anchors.bottomMargin: (parent.height/2)-unitsLabel.height
+                            text:{
+                                if (avgWeight > 0.0){
+                                    if(settings.unit ===0){
+                                        return i18n.tr("KG");
+                                    }else{
+                                        return i18n.tr("LB");
+                                    }
+                                }else{
+                                    ""
+                                }
                             }
+                            fontSize: "medium"
+                            color: Qt.darker(UbuntuColors.green)
                         }
                     }
                 }

@@ -232,3 +232,28 @@ function getWeightDirectionOnPeriod(period,userId){
     }
 
 }
+function getWeightAvgOnPeriod(period,userId){
+    var db = getDatabase();
+    var periodString ="";
+    var avg =0;
+    var today = new Date();
+    if (period === "lastWeek"){
+        var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()-7);
+        periodString = ("( date <= '"+Qt.formatDate(today,"yyyy-MM-dd")+"' AND date >='"+Qt.formatDate(lastWeek,"yyyy-MM-dd")+"')")
+    }else if(period === "lastMonth"){
+        var lastMonth = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
+        periodString = ("( date <= '"+Qt.formatDate(today,"yyyy-MM-dd")+"' AND date >='"+Qt.formatDate(lastWeek,"yyyy-MM-dd")+"')")
+    }
+    db.transaction(function(tx) {
+        var qurey="SELECT avg(weight) as avgWeight FROM weight WHERE userId="+userId+" AND "+periodString+" ORDER BY date"
+        var rs = tx.executeSql(qurey);
+        if(rs.rows.length>0){
+            if(rs.rows.item(0).avgWeight>0){
+                avg=rs.rows.item(0).avgWeight;
+            }
+        }
+    }
+    );
+    return avg
+
+}

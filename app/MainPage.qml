@@ -103,6 +103,7 @@ Page {
                                                           age,gender);
                 weightComp.bmiClass = BMI.getBMIClass(lastBMI,age,gender);
                 weightComp.weightDirection = Storage.getWeightDirectionFromLastTime(userId);
+                weightComp.avgWeight = Storage.getWeightAvgOnPeriod("lastMonth",userId);
                 graphComp.dataForChart = Storage.getArrayWeightGenaral(userId);
                 graphComp.update();
                 isEmpty= !(Storage.findLastWeigth(settings.userId)>0);
