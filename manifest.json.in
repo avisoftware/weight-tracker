@@ -9,7 +9,7 @@
             "desktop": "weight-tracker.desktop"
         }
     },
-    "version": "0.3",
+    "version": "0.4",
     "maintainer": "Avi Software <avisoftware123@gmail.com>",
     "framework": "ubuntu-sdk-15.04.4"
 }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-31 11:32+0000\n"
+"POT-Creation-Date: 2016-08-02 12:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,8 @@ msgid "About"
 msgstr ""
 
 #: ../app/AboutPage.qml:64
-msgid "Weight Tracker v0.3 (Beta)"
+#, qt-format
+msgid "Weight Tracker %1 (Beta)"
 msgstr ""
 
 #: ../app/AboutPage.qml:81
@@ -68,11 +69,13 @@ msgstr ""
 msgid "Weight History"
 msgstr ""
 
-#: ../app/ListWeightPage.qml:70 ../app/WeightComponent.qml:168
+#: ../app/ListWeightPage.qml:70 ../app/NewWeightComponent.qml:73
+#: ../app/WeightComponent.qml:179 ../app/WeightComponent.qml:387
 msgid "KG"
 msgstr ""
 
-#: ../app/ListWeightPage.qml:72 ../app/WeightComponent.qml:170
+#: ../app/ListWeightPage.qml:72 ../app/NewWeightComponent.qml:75
+#: ../app/WeightComponent.qml:181 ../app/WeightComponent.qml:389
 msgid "LB"
 msgstr ""
 
@@ -114,37 +117,37 @@ msgstr ""
 msgid "Leave empty to delete weight"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:75
+#: ../app/NewWeightComponent.qml:86
 msgid "Date:"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:91
+#: ../app/NewWeightComponent.qml:102
 msgid "Save"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:123 ../app/NewWeightComponent.qml:125
+#: ../app/NewWeightComponent.qml:134 ../app/NewWeightComponent.qml:136
 msgid "Date exist"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:130
+#: ../app/NewWeightComponent.qml:141
 msgid ""
 "On this date you already have a weight,\n"
 " do you want to update to the new weigth?"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:132
+#: ../app/NewWeightComponent.qml:143
 msgid "Are you sure you want to delete this entry?"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:141 ../app/UserComponent.qml:240
+#: ../app/NewWeightComponent.qml:152 ../app/UserComponent.qml:303
 msgid "Cancel"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:148
+#: ../app/NewWeightComponent.qml:159
 msgid "Update"
 msgstr ""
 
-#: ../app/NewWeightComponent.qml:150 ../app/UserComponent.qml:231
+#: ../app/NewWeightComponent.qml:161 ../app/UserComponent.qml:294
 msgid "Delete"
 msgstr ""
 
@@ -164,107 +167,148 @@ msgstr ""
 msgid "Female"
 msgstr ""
 
-#: ../app/UserComponent.qml:70
+#: ../app/UserComponent.qml:56
+msgid "Older then month"
+msgstr ""
+
+#: ../app/UserComponent.qml:57
+msgid "Older then 6 month"
+msgstr ""
+
+#: ../app/UserComponent.qml:58
+msgid "Older then year"
+msgstr ""
+
+#: ../app/UserComponent.qml:59
+msgid "All history"
+msgstr ""
+
+#: ../app/UserComponent.qml:81
 msgid "It is your first use, insert your details to proceed"
 msgstr ""
 
-#: ../app/UserComponent.qml:80
+#: ../app/UserComponent.qml:91
 msgid "User Settings:"
 msgstr ""
 
-#: ../app/UserComponent.qml:91
+#: ../app/UserComponent.qml:102
 msgid "Your Age:"
 msgstr ""
 
-#: ../app/UserComponent.qml:112
+#: ../app/UserComponent.qml:123
 msgid "Your Height:"
 msgstr ""
 
-#: ../app/UserComponent.qml:132
+#: ../app/UserComponent.qml:143
+msgid "CM"
+msgstr ""
+
+#: ../app/UserComponent.qml:145
+msgid "IN"
+msgstr ""
+
+#: ../app/UserComponent.qml:154
 msgid "Gender"
 msgstr ""
 
-#: ../app/UserComponent.qml:165
+#: ../app/UserComponent.qml:187
 msgid "General Settings:"
 msgstr ""
 
-#: ../app/UserComponent.qml:174
+#: ../app/UserComponent.qml:196
 msgid "Units"
 msgstr ""
 
-#: ../app/UserComponent.qml:204
+#: ../app/UserComponent.qml:226
 msgid "Show on the Metric"
 msgstr ""
 
-#: ../app/UserComponent.qml:218 ../app/UserComponent.qml:227
+#: ../app/UserComponent.qml:242 ../app/UserComponent.qml:290
 msgid "Clear History"
 msgstr ""
 
-#: ../app/UserComponent.qml:228
-msgid "You'll delete the current history"
+#: ../app/UserComponent.qml:291
+#, qt-format
+msgid "You'll delete %1 history"
 msgstr ""
 
-#: ../app/WeightComponent.qml:36
+#: ../app/WeightComponent.qml:48
 msgid "Your last weight from "
 msgstr ""
 
-#: ../app/WeightComponent.qml:203
+#: ../app/WeightComponent.qml:233
 msgid "Your BMI"
 msgstr ""
 
-#: ../app/WeightComponent.qml:246
+#: ../app/WeightComponent.qml:276
 msgid "Very Severely Underweight"
 msgstr ""
 
-#: ../app/WeightComponent.qml:249
+#: ../app/WeightComponent.qml:279
 msgid "Severely Underweight"
 msgstr ""
 
-#: ../app/WeightComponent.qml:252
+#: ../app/WeightComponent.qml:282
 msgid "Underweight"
 msgstr ""
 
-#: ../app/WeightComponent.qml:255
+#: ../app/WeightComponent.qml:285
 msgid "Normal"
 msgstr ""
 
-#: ../app/WeightComponent.qml:258
+#: ../app/WeightComponent.qml:288
 msgid "Overweight"
 msgstr ""
 
-#: ../app/WeightComponent.qml:261
+#: ../app/WeightComponent.qml:291
 msgid "Obese"
 msgstr ""
 
-#: ../app/WeightComponent.qml:264
+#: ../app/WeightComponent.qml:294
 msgid "Obese Class I"
 msgstr ""
 
-#: ../app/WeightComponent.qml:267
+#: ../app/WeightComponent.qml:297
 msgid "Obese Class II"
 msgstr ""
 
-#: ../app/WeightComponent.qml:270
+#: ../app/WeightComponent.qml:300
 msgid "Obese Class III"
 msgstr ""
 
-#: ../app/WeightComponent.qml:320
+#: ../app/WeightComponent.qml:355
+msgid "last month"
+msgstr ""
+
+#: ../app/WeightComponent.qml:356
+#, qt-format
+msgid "Average %1"
+msgstr ""
+
+#: ../app/WeightComponent.qml:356
+#, qt-format
+msgid ""
+"Your average weight\n"
+"in the %1"
+msgstr ""
+
+#: ../app/WeightComponent.qml:423
 msgid "Your weight increased from the last time"
 msgstr ""
 
-#: ../app/WeightComponent.qml:322
+#: ../app/WeightComponent.qml:425
 msgid "Your weight decreased from last time"
 msgstr ""
 
-#: ../app/WeightComponent.qml:324
+#: ../app/WeightComponent.qml:427
 msgid "Your weight same as last time"
 msgstr ""
 
-#: ../app/WeightComponent.qml:326
+#: ../app/WeightComponent.qml:429
 msgid "Your weight is higher than recommended"
 msgstr ""
 
-#: ../app/WeightComponent.qml:328
+#: ../app/WeightComponent.qml:431
 msgid "Your weight is lower than recommended"
 msgstr ""
 
