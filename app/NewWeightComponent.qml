@@ -33,8 +33,7 @@ Page {
                 TextField {
                     id: weightTextField
                     property double value;
-                    SlotsLayout.position: SlotsLayout.Last
-                    width:units.gu(15)
+                    width:units.gu(12)
                     text: value === 0?"":value
                     focus: true
                     validator:  DoubleValidator {
@@ -63,6 +62,18 @@ Page {
                     function selectValue() {
                         cursorPosition = 0
                         selectAll()
+                    }
+                }
+                Label{
+                    fontSize: "mediun"
+                    color: Qt.darker( UbuntuColors.green)
+                    SlotsLayout.position: SlotsLayout.Last
+                    text:{
+                        if(settings.unit ===0){
+                            return i18n.tr("KG");
+                        }else{
+                            return i18n.tr("LB");
+                        }
                     }
                 }
             }

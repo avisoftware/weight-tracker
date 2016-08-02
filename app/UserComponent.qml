@@ -124,7 +124,6 @@ Page {
                     title.color:Qt.darker( UbuntuColors.green)
                     TextField {
                         id: heightTextField
-                        SlotsLayout.position: SlotsLayout.Last
                         width:units.gu(20)
                         validator:  IntValidator {}
                         inputMethodHints:Qt.ImhFormattedNumbersOnly
@@ -133,6 +132,18 @@ Page {
                         }
                         Component.onCompleted: {
                             text= settings.height !=0 ? settings.height:""
+                        }
+                    }
+                    Label{
+                        fontSize: "mediun"
+                        color: Qt.darker( UbuntuColors.green)
+                        SlotsLayout.position: SlotsLayout.Last
+                        text:{
+                            if(settings.unit ===0){
+                                return i18n.tr("CM");
+                            }else{
+                                return i18n.tr("IN");
+                            }
                         }
                     }
                 }
@@ -225,6 +236,7 @@ Page {
                 }
             }
             ExpandableListItem {
+                visible: !settings.isFirstUse
                 id: clearHistoryList
                 listViewHeight: units.gu(18)
                 titleText.text: i18n.tr("Clear History")
