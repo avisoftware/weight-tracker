@@ -9,11 +9,27 @@ function initialize() {
                     tx.executeSql('CREATE TABLE IF NOT EXISTS users(id INT, name TEXT)');
                 });
 }
-function deleteHistory(){
+function deleteHistoryOnPeriod(period,userId){
     var db = getDatabase();
+    var periodString="";
+    var today = new Date();
+    if (period === 0){
+        var month = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
+        periodString = ("( date < '"+Qt.formatDate(month,"yyyy-MM-dd")+"')")
+    }else if(period === 1){
+        var sixMonth = new Date(today.getFullYear(), today.getMonth()-6, today.getDate());
+        periodString = ("( date < '"+Qt.formatDate(sixMonth,"yyyy-MM-dd")+"')")
+    }else if(period === 2){
+        var year = new Date(today.getFullYear()-1, today.getMonth()-1, today.getDate());
+        periodString = ("( date < '"+Qt.formatDate(year,"yyyy-MM-dd")+"')")
+    }
+    else if(period === 3){
+        var all = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        periodString = ("1=1")
+    }
     db.transaction(
                 function(tx) {
-                    tx.executeSql('DELETE FROM weight');
+                    tx.executeSql('DELETE FROM weight WHERE userId='+userId+' AND '+periodString);
                 });
 }
 
@@ -197,7 +213,7 @@ function getWeightDirectionFromLastTime (userId){
     }else if(sum<0){
         return "d"
     }else if(isNaN(sum)){
-      return "-"
+        return "-"
     }
     return "s"
 }
@@ -228,7 +244,7 @@ function getWeightDirectionOnPeriod(period,userId){
     }else if(sum<-0.1){
         return "down"
     }else{
-      return "same"
+        return "same"
     }
 
 }
@@ -242,7 +258,7 @@ function getWeightAvgOnPeriod(period,userId){
         periodString = ("( date <= '"+Qt.formatDate(today,"yyyy-MM-dd")+"' AND date >='"+Qt.formatDate(lastWeek,"yyyy-MM-dd")+"')")
     }else if(period === "lastMonth"){
         var lastMonth = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
-        periodString = ("( date <= '"+Qt.formatDate(today,"yyyy-MM-dd")+"' AND date >='"+Qt.formatDate(lastWeek,"yyyy-MM-dd")+"')")
+        periodString = ("( date <= '"+Qt.formatDate(today,"yyyy-MM-dd")+"' AND date >='"+Qt.formatDate(lastMonth,"yyyy-MM-dd")+"')")
     }
     db.transaction(function(tx) {
         var qurey="SELECT avg(weight) as avgWeight FROM weight WHERE userId="+userId+" AND "+periodString+" ORDER BY date"

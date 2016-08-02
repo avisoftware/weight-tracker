@@ -49,6 +49,17 @@ Page {
             genderList.subText.text = genderModel.get(settings.gender).gender
         }
     }
+    ListModel {
+        id: deleteHistoryModel
+        Component.onCompleted: initialize()
+        function initialize() {
+            deleteHistoryModel.append({ "period": i18n.tr("Older then month"), "index": 0 })
+            deleteHistoryModel.append({ "period": i18n.tr("Older then 6 month"), "index": 1 })
+            deleteHistoryModel.append({ "period": i18n.tr("Older then year"), "index": 2 })
+            deleteHistoryModel.append({ "period": i18n.tr("All history"), "index": 3 })
+
+        }
+    }
     Flickable {
         id: flickable
         anchors.fill: parent
@@ -213,25 +224,65 @@ Page {
                     }
                 }
             }
-            ListItem {
-                ListItemLayout {
-                    title.text: i18n.tr("Clear History")
-                    title.color:Qt.darker( UbuntuColors.green)
+            ExpandableListItem {
+                id: clearHistoryList
+                listViewHeight: units.gu(18)
+                titleText.text: i18n.tr("Clear History")
+                titleText.color:Qt.darker( UbuntuColors.green)
+                subText.color: Qt.darker( UbuntuColors.green)
+                model: deleteHistoryModel
+                delegate: ListItem {
+                    divider.visible: false
+                    height: clearHistoryListItemLayout.height
+                    ListItemLayout {
+                        id: clearHistoryListItemLayout
+                        title.text: model.period
+                        title.color:Qt.darker( UbuntuColors.green)
+                        padding { top: units.gu(1); bottom: units.gu(1) }
+                        Icon {
+                            SlotsLayout.position: SlotsLayout.Trailing
+                            width: units.gu(2)
+                            name: "tick"
+                            visible: false
+                        }
+                    }
+
+                    onClicked: {
+                        onClicked: PopupUtils.open(confirmEraseHistory,null,{ 'period': model.index })
+                        clearHistoryList.expansion.expanded = false
+                    }
                 }
-                onClicked: PopupUtils.open(confirmEraseHistory)
             }
             Component {
                 id: confirmEraseHistory
                 Dialog {
                     id: dialogueErase
+                    property int period;
+                    property string periodStr: {
+                         switch (period){
+                         case 0:
+                             "older then month"
+                             break;
+                         case 1:
+                             "older then 6 month"
+                             break;
+                         case 2:
+                             "older then year"
+                             break;
+                         case 3:
+                             "all"
+                             break;
+                         }
+                    }
+
                     title: i18n.tr("Clear History")
-                    text: i18n.tr("You'll delete the current history")
+                    text: i18n.tr("You'll delete %1 history").arg(periodStr)
 
                     Button {
                         text: i18n.tr("Delete")
                         color: UbuntuColors.red
                         onClicked: {
-                            Storage.deleteHistory();
+                            Storage.deleteHistoryOnPeriod(period,settings.userId);
                             PopupUtils.close(dialogueErase);
                             mainPage.updateView();
                         }
