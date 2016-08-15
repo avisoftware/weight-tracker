@@ -6,5 +6,6 @@ Icon=@ICON@
 Terminal=false
 Type=Application
 X-Ubuntu-Touch=true
-X-Ubuntu-Splash-Image=@ICON@
+X-Ubuntu-Splash-Title=Weight Tracker
+X-Ubuntu-Splash-Image=@ICON_WEIGHTER@
 X-Ubuntu-Splash-Color=#32B35A
