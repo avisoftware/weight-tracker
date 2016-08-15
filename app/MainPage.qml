@@ -29,7 +29,7 @@ Page {
                 text: i18n.tr("Settings")
                 onTriggered: {
                     columnAdded = false
-                    pageLayout.primaryPage= userComp
+                    pageLayout.primaryPage= settingsView
                 }
             },
             Action {
@@ -92,9 +92,14 @@ Page {
             if(!settings.isFirstUse){
                 var userId = settings.userId;
                 var unit = settings.unit;
-                var height = settings.height;
-                var age = settings.age;
-                var gender = settings.gender;
+                //var height = settings.height;
+                //var age = settings.age;
+                //var gender = settings.gender;
+                var details = Storage.getUserDetails(userId);
+                var age=details.age
+                var height =details.height
+                var gender=details.gender
+                var userName =details.name
                 var lastWeight = Storage.findLastWeigth(userId);
                 var lastBMI =  BMI.getBmiNumber(unit,height,lastWeight);
                 weightComp.lastWeight = lastWeight;
@@ -104,6 +109,7 @@ Page {
                 weightComp.bmiClass = BMI.getBMIClass(lastBMI,age,gender);
                 weightComp.weightDirection = Storage.getWeightDirectionFromLastTime(userId);
                 weightComp.avgWeight = Storage.getWeightAvgOnPeriod("lastMonth",userId);
+                weightComp.userName= userName;
                 graphComp.dataForChart = Storage.getArrayWeightGenaral(userId);
                 graphComp.update();
                 isEmpty= !(Storage.findLastWeigth(settings.userId)>0);

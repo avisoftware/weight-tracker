@@ -69,8 +69,11 @@ MainView {
         ListWeightPage{
             id: listWeightPage
         }
+        SettingsView{
+            id:settingsView
+        }
         UserComponent{
-            id:userComp
+            id: userComp
         }
 
     }

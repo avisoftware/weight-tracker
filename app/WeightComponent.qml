@@ -11,6 +11,7 @@ Item {
     property int tipBMI: 0
     property int bmiClass: 0
     property string weightDirection: ""
+    property string userName: ""
     property double avgWeight: 0.0
     property bool isWide: rowLeft.width *2 < parent.width
     property bool isShort:units.gu(40)> parent.height; //short mean lanscape
@@ -45,7 +46,7 @@ Item {
                     anchors{
                         centerIn: parent
                     }
-                    text:lastWeight > 0 ? i18n.tr("Your last weight from ")+Storage.findLastDate(settings.userId) : ""
+                    text:lastWeight > 0 ?i18n.tr("Hi")+" "+ userName+"!\n"+i18n.tr("Your last weight from ")+Storage.findLastDate(settings.userId) : ""
                     fontSize: "small"
                     color:Qt.darker( UbuntuColors.green)
                 }

@@ -3,11 +3,25 @@ function getDatabase() {
 }
 function initialize() {
     var db = getDatabase();
+    console.log("initializing...")
     db.transaction(
                 function(tx) {
                     tx.executeSql('CREATE TABLE IF NOT EXISTS weight(weight REAL, date DATE,userId INT)');
-                    tx.executeSql('CREATE TABLE IF NOT EXISTS users(id INT, name TEXT)');
+                    tx.executeSql('CREATE TABLE IF NOT EXISTS users(id INT, name TEXT,age INT, height INT,gender INT)');
+                    var a=  tx.executeSql('PRAGMA table_info(users)');
+                    if(a.rows.length<5){
+                        tx.executeSql(' ALTER TABLE users ADD COLUMN age INT;');
+                        tx.executeSql(' ALTER TABLE users ADD COLUMN height INT;');
+                        tx.executeSql(' ALTER TABLE users ADD COLUMN gender INT;');
+                        console.log("updated user table")
+                    }
+                    if(usersCount()<=0&&!settings.isFirstUse){
+                             insertUser("user1",settings.age,settings.height,settings.gender);
+                        console.log("insert temp user")
+                    }
                 });
+    console.log("initialized")
+
 }
 function deleteHistoryOnPeriod(period,userId){
     var db = getDatabase();
@@ -31,6 +45,26 @@ function deleteHistoryOnPeriod(period,userId){
                 function(tx) {
                     tx.executeSql('DELETE FROM weight WHERE userId='+userId+' AND '+periodString);
                 });
+}
+function deleteUser(userId){
+    var db = getDatabase();
+    db.transaction(
+                function(tx) {
+                    if(usersCount()>1){
+                        tx.executeSql('DELETE FROM weight WHERE userId='+userId);
+                        tx.executeSql('DELETE FROM users WHERE id='+userId);
+                    }
+                });
+}
+function usersCount(){
+    var userCount =0;
+    var db = getDatabase();
+    db.transaction(
+                function(tx) {
+                    var rs = tx.executeSql('SELECT * FROM users');
+                    userCount = rs.rows.length
+                });
+    return userCount;
 }
 
 function setWeight(weigth, date,userId) {
@@ -168,18 +202,67 @@ function getMaxUserId(){
     );
     return maxId;
 }
+function getMinUserId(){
+    var minId=0;
+    var db = getDatabase();
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT MIN(id) AS id FROM users');
+        if(rs.rows.item(0).id>0){
+            minId=rs.rows.item(0).id
+        }
+    }
+    );
+    return minId;
+}
+function getUserName(id){
+    var name="";
+    var db = getDatabase();
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT name FROM users WHERE id=?',[id]);
+        if(rs.rows.item(0).id>0){
+            name=rs.rows.item(0).name
+        }
+    }
+    );
+    return name;
+}
+function getUserDetails(id){
+    var details={};
+    var db = getDatabase();
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT * FROM users WHERE id=?',[id]);
+        if(rs.rows.item(0)===undefined){
+            initialize()
+            rs = tx.executeSql('SELECT * FROM users WHERE id=?',[id]);
+        }
+        if(rs.rows.item(0).id>0){
+            details=rs.rows.item(0)
+        }
 
-function insertUser(userName){
+
+    }
+    );
+    return details;
+}
+function insertUser(userName,age,height,gender){
     var db = getDatabase();
     var id=0;
     db.transaction(function(tx) {
         id=getMaxUserId()+1
-        tx.executeSql('INSERT  INTO users VALUES (?,?);', [id,userName]);
+        tx.executeSql('INSERT  INTO users VALUES (?,?,?,?,?);', [id,userName,age,height,gender]);
     }
     );
     return id;
 }
-
+function updateUser(id,userName,age,height,gender){
+    var db = getDatabase();
+    db.transaction(function(tx) {
+     var rs= tx.executeSql('UPDATE  users SET  name=?, age=?,height=?,gender=? WHERE id=?', [userName,age,height,gender,id]);
+        console.log("user updated")
+    }
+    );
+    return id;
+}
 function getArrayUsers(){
     var db = getDatabase();
     var users=[];
