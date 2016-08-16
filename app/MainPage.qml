@@ -66,7 +66,7 @@ Page {
                 horizontalCenter: parent.horizontalCenter
             }
             height: mainView.height /2
-            width: mainView.width
+            width: mainView.width            
         }
         GraphComponent{
             id: graphComp
@@ -108,12 +108,13 @@ Page {
                                                           age,gender);
                 weightComp.bmiClass = BMI.getBMIClass(lastBMI,age,gender);
                 weightComp.weightDirection = Storage.getWeightDirectionFromLastTime(userId);
-                weightComp.avgWeight = Storage.getWeightAvgOnPeriod("lastMonth",userId);
+                weightComp.updateStatistics();
                 weightComp.userName= userName;
                 graphComp.dataForChart = Storage.getArrayWeightGenaral(userId);
                 graphComp.update();
                 isEmpty= !(Storage.findLastWeigth(settings.userId)>0);
                 listWeightPage.updateView();
+                listStatisticsPage.updateView();
                 if(settings.showOnMetric){
                     metrics.update(lastWeight)
                 }

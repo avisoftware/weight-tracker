@@ -69,6 +69,9 @@ MainView {
         ListWeightPage{
             id: listWeightPage
         }
+        ListStatisticsPage{
+            id:listStatisticsPage
+        }
         SettingsView{
             id:settingsView
         }

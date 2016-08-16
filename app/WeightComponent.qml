@@ -12,7 +12,7 @@ Item {
     property int bmiClass: 0
     property string weightDirection: ""
     property string userName: ""
-    property double avgWeight: 0.0
+    // property double avgWeight: 0.0
     property bool isWide: rowLeft.width *2 < parent.width
     property bool isShort:units.gu(40)> parent.height; //short mean lanscape
     Item{
@@ -339,69 +339,26 @@ Item {
                 bottom:parent.bottom
                 left: parent.left
             }
-            Item{
-                id: avgRect
-                height: avgTitelLabel.height+avgLabel.height
+            MouseArea{
+                anchors.fill:parent
+                onClicked:{
+                    columnAdded = true
+                    pageLayout.addPageToNextColumn(mainPage, listStatisticsPage)
+                    listStatisticsPage.updateView()
+                }
+            }
+            StatisticsComponent{
+                id:statisticsComp
                 anchors{
                     centerIn: parent
-                }
-                Item{
-                    id: avgTitle
-                    height: avgTitelLabel.height
-                    anchors.top:parent.top
-                    Label{
-                        id: avgTitelLabel
-                        anchors.top:  parent.top
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        property string periodStr: i18n.tr("last month")
-                        property string str: isShort?i18n.tr("Average %1").arg(periodStr) :i18n.tr("Your average weight\nin the %1").arg(periodStr)
-                        text:lastWeight > 0 ? str:""
-                        fontSize: "small"
-                        horizontalAlignment: Text.AlignHCenter
-                        color:Qt.darker( UbuntuColors.green)
-                    }
-                }
-                Item{
-                    id:avgItem
-                    height:avgLabel.height
-                    width: avgTitelLabel.width> avgLabel.width ? avgLabel.width:avgTitelLabel.width
-                    anchors{
-                        top:avgTitle.bottom
-                        horizontalCenter: parent.horizontalCenter
-                    }
-
-                    Label {
-                        id: avgLabel
-                        anchors.centerIn:   parent
-                        text:avgWeight > 0.0 ? avgWeight.toFixed(2) : "-"
-                        font.pixelSize:   isShort? units.dp(30):units.dp(40)
-                        color:Qt.darker(UbuntuColors.green)
-                    }
-                    Label {
-                        id:unitsLabel
-                        anchors.bottom: parent.bottom
-                        anchors.left: avgLabel.right
-                        anchors.bottomMargin: (parent.height/2)-unitsLabel.height
-                        text:{
-                            if (avgWeight > 0.0){
-                                if(settings.unit ===0){
-                                    return i18n.tr("KG");
-                                }else{
-                                    return i18n.tr("LB");
-                                }
-                            }else{
-                                ""
-                            }
-                        }
-                        fontSize: "medium"
-                        color: Qt.darker(UbuntuColors.green)
-                    }
                 }
             }
         }
     }
+    function updateStatistics(){
+        statisticsComp.initializeData();
+    }
     Component.onCompleted: {
-        //isShort=
     }
 
     Component {

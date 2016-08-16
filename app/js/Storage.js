@@ -342,6 +342,9 @@ function getWeightAvgOnPeriod(period,userId){
     }else if(period === "lastMonth"){
         var lastMonth = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
         periodString = ("( date <= '"+Qt.formatDate(today,"yyyy-MM-dd")+"' AND date >='"+Qt.formatDate(lastMonth,"yyyy-MM-dd")+"')")
+    }else if(period === "lastYear"){
+        var lastYear = new Date(today.getFullYear()-1, today.getMonth(), today.getDate());
+        periodString = ("( date <= '"+Qt.formatDate(today,"yyyy-MM-dd")+"' AND date >='"+Qt.formatDate(lastYear,"yyyy-MM-dd")+"')")
     }
     db.transaction(function(tx) {
         var qurey="SELECT avg(weight) as avgWeight FROM weight WHERE userId="+userId+" AND "+periodString+" ORDER BY date"
@@ -352,7 +355,67 @@ function getWeightAvgOnPeriod(period,userId){
             }
         }
     }
-    );
+    );    
     return avg
-
+}
+function getMinWeight(userId){
+    var db = getDatabase();
+    var min =0;
+    db.transaction(function(tx) {
+        var qurey="SELECT min(weight) as minWeight FROM weight WHERE userId="+userId
+        var rs = tx.executeSql(qurey);
+        if(rs.rows.length>0){
+            if(rs.rows.item(0).minWeight>0){
+                min=rs.rows.item(0).minWeight;
+            }
+        }
+    }
+    );
+    return min
+}
+function getMaxWeight(userId){
+    var db = getDatabase();
+    var max =0;
+    db.transaction(function(tx) {
+        var qurey="SELECT max(weight) as maxWeight FROM weight WHERE userId="+userId
+        var rs = tx.executeSql(qurey);
+        if(rs.rows.length>0){
+            if(rs.rows.item(0).maxWeight>0){
+                max=rs.rows.item(0).maxWeight;
+            }
+        }
+    }
+    );
+    return max
+}
+function getWeightChangesOnPeriod(period,userId){
+    var db = getDatabase();
+    var periodString ="";
+    var firstWeight =0;
+    var lastWeight =0;
+    var today = new Date();
+    if (period === "lastWeek"){
+        var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()-7);
+        periodString = ("( date <= '"+Qt.formatDate(today,"yyyy-MM-dd")+"' AND date >='"+Qt.formatDate(lastWeek,"yyyy-MM-dd")+"')")
+    }else if(period === "lastMonth"){
+        var lastMonth = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
+        periodString = ("( date <= '"+Qt.formatDate(today,"yyyy-MM-dd")+"' AND date >='"+Qt.formatDate(lastMonth,"yyyy-MM-dd")+"')")
+    }else if(period === "lastYear"){
+        var lastYear = new Date(today.getFullYear()-1, today.getMonth(), today.getDate());
+        periodString = ("( date <= '"+Qt.formatDate(today,"yyyy-MM-dd")+"' AND date >='"+Qt.formatDate(lastYear,"yyyy-MM-dd")+"')")
+    }else if(period === "all"){
+        periodString = ("date <= '"+Qt.formatDate(today,"yyyy-MM-dd")+"'")
+    }
+    db.transaction(function(tx) {
+        var qurey="SELECT * FROM weight WHERE userId="+userId+" AND "+periodString+" ORDER BY date DESC"
+        var rs = tx.executeSql(qurey);
+        if(rs.rows.length>0){
+            if(rs.rows.item(0).weight>0){
+                lastWeight=rs.rows.item(0).weight;
+                firstWeight=rs.rows.item(rs.rows.length-1).weight;
+            }
+        }
+    }
+    );
+    return lastWeight-firstWeight
 }
