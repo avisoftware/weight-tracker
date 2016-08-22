@@ -38,7 +38,7 @@ set(APP_ID            "weight-tracker.avisoftware")
 set(WEIGHT-TRACKER_DIR "share/qml/weight-tracker")
 set(MAIN_QML          "Main.qml")
 set(ICON              "graphics/weight-tracker.png")
-set(ICON_WEIGHTER     "graphics/weighter.svg")
+set(ICON_WEIGHTER     "graphics/splash.png")
 
 # Set install paths
 set(CMAKE_INSTALL_PREFIX /)
