@@ -1,3 +1,4 @@
+//global//
 function getDatabase() {
     return LocalStorage.openDatabaseSync("weight-tracker", "1.0", "StorageDatabase", 1000000);
 }
@@ -46,6 +47,27 @@ function deleteHistoryOnPeriod(period,userId){
                     tx.executeSql('DELETE FROM weight WHERE userId='+userId+' AND '+periodString);
                 });
 }
+
+//users//
+function insertUser(userName,age,height,gender){
+    var db = getDatabase();
+    var id=0;
+    db.transaction(function(tx) {
+        id=getMaxUserId()+1
+        tx.executeSql('INSERT  INTO users VALUES (?,?,?,?,?);', [id,userName,age,height,gender]);
+    }
+    );
+    return id;
+}
+function updateUser(id,userName,age,height,gender){
+    var db = getDatabase();
+    db.transaction(function(tx) {
+     var rs= tx.executeSql('UPDATE  users SET  name=?, age=?,height=?,gender=? WHERE id=?', [userName,age,height,gender,id]);
+        console.log("user updated")
+    }
+    );
+    return id;
+}
 function deleteUser(userId){
     var db = getDatabase();
     db.transaction(
@@ -55,6 +77,18 @@ function deleteUser(userId){
                         tx.executeSql('DELETE FROM users WHERE id='+userId);
                     }
                 });
+}
+function getArrayUsers(){
+    var db = getDatabase();
+    var users=[];
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT * FROM users');
+        for(var i =0;i < rs.rows.length;i++){
+            users.push([rs.rows.item(i).id,rs.rows.item(i).name]);
+        }
+    }
+    );
+    return users;
 }
 function usersCount(){
     var userCount =0;
@@ -66,7 +100,74 @@ function usersCount(){
                 });
     return userCount;
 }
+function getUserName(id){
+    var name="";
+    var db = getDatabase();
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT name FROM users WHERE id=?',[id]);
+        if(rs.rows.item(0).id>0){
+            name=rs.rows.item(0).name
+        }
+    }
+    );
+    return name;
+}
+function getUserDetails(id){
+    var details={};
+    var db = getDatabase();
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT * FROM users WHERE id=?',[id]);
+        if(rs.rows.item(0)===undefined){
+            initialize()
+            rs = tx.executeSql('SELECT * FROM users WHERE id=?',[id]);
+        }
+        if(rs.rows.item(0).id>0){
+            details=rs.rows.item(0)
+        }
 
+
+    }
+    );
+    return details;
+}
+function getMaxUserId(){
+    var maxId=0;
+    var db = getDatabase();
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT MAX(id) AS id FROM users');
+        if(rs.rows.item(0).id>0){
+            maxId=rs.rows.item(0).id
+        }
+    }
+    );
+    return maxId;
+}
+function getMinUserId(){
+    var minId=0;
+    var db = getDatabase();
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT MIN(id) AS id FROM users');
+        if(rs.rows.item(0).id>0){
+            minId=rs.rows.item(0).id
+        }
+    }
+    );
+    return minId;
+}
+
+//data//
+function checkDateExist(date,userId){
+    var db = getDatabase();
+    var res = false;
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT * FROM weight WHERE date=? AND userId=?',[date,userId]);
+        if(rs.rows.length){
+            res=true;
+        }
+    }
+    )
+    return res;
+}
 function setWeight(weigth, date,userId) {
     var db = getDatabase();
     var res = "";
@@ -80,84 +181,6 @@ function setWeight(weigth, date,userId) {
     }
     );
     // The function returns “OK” if it was successful, or “Error” if it wasn't
-    return res;
-}
-function findLastWeigth(userId) {
-    var db = getDatabase();
-    var lastWeight =0
-    db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM weight WHERE userId=? ORDER BY date DESC;',[userId]);
-        if(rs.rows.length>0){
-            lastWeight=rs.rows.item(0).weight
-        }
-    }
-    )
-    return lastWeight;
-}
-function findLastDate(userId) {
-    var db = getDatabase();
-    var lastDate =0
-    db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM weight WHERE userId=? ORDER BY date DESC;',[userId]);
-        if(rs.rows.length>0){
-            lastDate=Qt.formatDate(rs.rows.item(0).date,Qt.SystemLocaleShortDate)
-        }
-    }
-    )
-    return lastDate;
-}
-function getModelOfWeight(userId){
-    var db = getDatabase();
-    var arr=[];
-    db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM weight WHERE userId=?  ORDER BY date',[userId]);
-        for(var i =0;i < rs.rows.length;i++){
-            arr.push(rs.rows.item(i));
-        }
-    }
-    );
-    return arr;
-}
-
-function getArrayWeightGenaral(userId) {
-    var db = getDatabase();
-    var res = "";
-    var labels=[];
-    var values=[];
-    db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM weight WHERE userId=?  ORDER BY date',[userId]);
-        for(var i =0;i < rs.rows.length;i++){
-            labels.push(Qt.formatDate(rs.rows.item(i).date,"dd.MM.yy"));
-            values.push(rs.rows.item(i).weight);
-        }
-    }
-    );
-    if (labels.length<2){
-        return "";
-    }
-    res = {
-        labels: labels,
-        datasets: [{
-                fillColor: "rgba(62, 179, 79, 0.4)" ,
-                strokeColor: Qt.darker( UbuntuColors.green),
-                pointColor: "rgba(62, 179, 79, 1)",
-                pointStrokeColor: Qt.darker( UbuntuColors.green),
-                data: values
-            }]
-    }
-
-    return res;
-}
-function checkDateExist(date,userId){
-    var db = getDatabase();
-    var res = false;
-    db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM weight WHERE date=? AND userId=?',[date,userId]);
-        if(rs.rows.length){
-            res=true;
-        }
-    }
-    )
     return res;
 }
 function updateWeight(weigth, date,userId){
@@ -190,91 +213,73 @@ function deleteWeight( date,userId){
     // The function returns “OK” if it was successful, or “Error” if it wasn't
     return res;
 }
-function getMaxUserId(){
-    var maxId=0;
+function getArrayWeightGenaral(userId) {
     var db = getDatabase();
+    var res = "";
+    var labels=[];
+    var values=[];
     db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT MAX(id) AS id FROM users');
-        if(rs.rows.item(0).id>0){
-            maxId=rs.rows.item(0).id
-        }
-    }
-    );
-    return maxId;
-}
-function getMinUserId(){
-    var minId=0;
-    var db = getDatabase();
-    db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT MIN(id) AS id FROM users');
-        if(rs.rows.item(0).id>0){
-            minId=rs.rows.item(0).id
-        }
-    }
-    );
-    return minId;
-}
-function getUserName(id){
-    var name="";
-    var db = getDatabase();
-    db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT name FROM users WHERE id=?',[id]);
-        if(rs.rows.item(0).id>0){
-            name=rs.rows.item(0).name
-        }
-    }
-    );
-    return name;
-}
-function getUserDetails(id){
-    var details={};
-    var db = getDatabase();
-    db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM users WHERE id=?',[id]);
-        if(rs.rows.item(0)===undefined){
-            initialize()
-            rs = tx.executeSql('SELECT * FROM users WHERE id=?',[id]);
-        }
-        if(rs.rows.item(0).id>0){
-            details=rs.rows.item(0)
-        }
-
-
-    }
-    );
-    return details;
-}
-function insertUser(userName,age,height,gender){
-    var db = getDatabase();
-    var id=0;
-    db.transaction(function(tx) {
-        id=getMaxUserId()+1
-        tx.executeSql('INSERT  INTO users VALUES (?,?,?,?,?);', [id,userName,age,height,gender]);
-    }
-    );
-    return id;
-}
-function updateUser(id,userName,age,height,gender){
-    var db = getDatabase();
-    db.transaction(function(tx) {
-     var rs= tx.executeSql('UPDATE  users SET  name=?, age=?,height=?,gender=? WHERE id=?', [userName,age,height,gender,id]);
-        console.log("user updated")
-    }
-    );
-    return id;
-}
-function getArrayUsers(){
-    var db = getDatabase();
-    var users=[];
-    db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM users');
+        var rs = tx.executeSql('SELECT * FROM weight WHERE userId=?  ORDER BY date',[userId]);
         for(var i =0;i < rs.rows.length;i++){
-            users.push([rs.rows.item(i).id,rs.rows.item(i).name]);
+            labels.push(Qt.formatDate(rs.rows.item(i).date,"dd.MM.yy"));
+            values.push(rs.rows.item(i).weight);
         }
     }
     );
-    return users;
+    if (labels.length<2){
+        return "";
+    }
+    res = {
+        labels: labels,
+        datasets: [{
+                fillColor: "rgba(62, 179, 79, 0.4)" ,
+                strokeColor: Qt.darker( UbuntuColors.green),
+                pointColor: "rgba(62, 179, 79, 1)",
+                pointStrokeColor: Qt.darker( UbuntuColors.green),
+                data: values
+            }]
+    }
+
+    return res;
 }
+function getModelOfWeight(userId){
+    var db = getDatabase();
+    var arr=[];
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT * FROM weight WHERE userId=?  ORDER BY date',[userId]);
+        for(var i =0;i < rs.rows.length;i++){
+            arr.push(rs.rows.item(i));
+        }
+    }
+    );
+    return arr;
+}
+function findLastWeigth(userId) {
+    var db = getDatabase();
+    var lastWeight =0
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT * FROM weight WHERE userId=? ORDER BY date DESC;',[userId]);
+        if(rs.rows.length>0){
+            lastWeight=rs.rows.item(0).weight
+        }
+    }
+    )
+    return lastWeight;
+}
+function findLastDate(userId) {
+    var db = getDatabase();
+    var lastDate =0
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT * FROM weight WHERE userId=? ORDER BY date DESC;',[userId]);
+        if(rs.rows.length>0){
+            lastDate=Qt.formatDate(rs.rows.item(0).date,Qt.SystemLocaleShortDate)
+        }
+    }
+    )
+    return lastDate;
+}
+
+//statistics//
 function getWeightDirectionFromLastTime (userId){
     var db = getDatabase();
     var wight=[];
@@ -300,7 +305,6 @@ function getWeightDirectionFromLastTime (userId){
     }
     return "s"
 }
-
 function getWeightDirectionOnPeriod(period,userId){
     var db = getDatabase();
     var wight=[];
