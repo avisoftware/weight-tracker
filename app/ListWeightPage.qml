@@ -5,14 +5,14 @@ import QtQuick.LocalStorage 2.0
 import "js/Storage.js" as Storage
 
 Page {
-     id: root
+    id: root
     header: PageHeader {
         id: main_header
         title: i18n.tr("Weight History")
         StyleHints {
-                foregroundColor:Qt.darker( UbuntuColors.green)
-                dividerColor: Qt.darker( UbuntuColors.green)
-            }
+            foregroundColor:Qt.darker( UbuntuColors.green)
+            dividerColor: Qt.darker( UbuntuColors.green)
+        }
         leadingActionBar.actions: [
             Action {
                 iconName: "back"
@@ -23,76 +23,76 @@ Page {
             }
         ]
     }
-        Flickable {
-            id: page_flickable
-            anchors {
-                top: main_header.bottom
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-            }
-
-            contentHeight:  view.height + units.gu(2)
-            clip: true
-            ListModel{
-                id: model
-            }
-
-           ListView{
-               id:view
-               width: parent.width;
-               height: model.count * units.gu(8)
-
-               model:  model
-               delegate: ListItem {
-                   id: listItem
-                   leadingActions: ListItemActions {
-                                  actions: [
-                                      Action {
-                                          iconName: "delete"
-                                          onTriggered: {
-                                             if( Storage.deleteWeight(Qt.formatDate(date,"yyyy-MM-dd"),settings.userId)==="OK"){
-                                                updateView();
-                                                 mainPage.updateView()
-                                             }
-
-                                          }
-                                      }
-                                  ]
-                              }
-                   ListItemLayout {
-                       title.text:Qt.formatDate(date,Qt.SystemLocaleShortDate)
-                       title.color:Qt.darker( UbuntuColors.green)
-                       Label {
-                           text: {
-                               var units =""
-                               if(settings.unit ===0){
-                                   units= i18n.tr("KG");
-                               }else{
-                                   units= i18n.tr("LB");
-                               }
-                               weight.toString().replace(".", Qt.locale().decimalPoint)+" "+units}
-                           color:Qt.darker( UbuntuColors.green)
-                       }
-                   }
-               }
-           }
-           Component.onCompleted: {
-              updateView();
-           }
-
+    Flickable {
+        id: page_flickable
+        anchors {
+            top: main_header.bottom
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
         }
-        function updateView(){
-            model.clear();
-            var db = Storage.getDatabase();
-            db.transaction(function(tx) {
-                var rs = tx.executeSql('SELECT * FROM weight WHERE userId=?  ORDER BY date DESC',[settings.userId]);
-                for(var i =0;i < rs.rows.length;i++){
-                    model.append(rs.rows.item(i));
+
+        contentHeight:  view.height + units.gu(2)
+        clip: true
+        ListModel{
+            id: model
+        }
+
+        ListView{
+            id:view
+            width: parent.width;
+            height: model.count * units.gu(8)
+
+            model:  model
+            delegate: ListItem {
+                id: listItem
+                leadingActions: ListItemActions {
+                    actions: [
+                        Action {
+                            iconName: "delete"
+                            onTriggered: {
+                                if( Storage.deleteWeight(Qt.formatDate(date,"yyyy-MM-dd"),settings.userId)==="OK"){
+                                    updateView();
+                                    mainPage.updateView()
+                                }
+
+                            }
+                        }
+                    ]
+                }
+                ListItemLayout {
+                    title.text:Qt.formatDate(date,Qt.SystemLocaleShortDate)
+                    title.color:Qt.darker( UbuntuColors.green)
+                    Label {
+                        text: {
+                            var units =""
+                            if(settings.unit ===0){
+                                units= i18n.tr("KG");
+                            }else{
+                                units= i18n.tr("LB");
+                            }
+                            weight.toString().replace(".", Qt.locale().decimalPoint)+" "+units}
+                        color:Qt.darker( UbuntuColors.green)
+                    }
                 }
             }
-            );
         }
+        Component.onCompleted: {
+            updateView();
+        }
+
+    }
+    function updateView(){
+        model.clear();
+        var db = Storage.getDatabase();
+        db.transaction(function(tx) {
+            var rs = tx.executeSql('SELECT * FROM weight WHERE userId=?  ORDER BY date DESC',[settings.userId]);
+            for(var i =0;i < rs.rows.length;i++){
+                model.append(rs.rows.item(i));
+            }
+        }
+        );
+    }
 }
 
 

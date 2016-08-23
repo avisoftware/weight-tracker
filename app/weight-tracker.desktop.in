@@ -1,6 +1,6 @@
 [Desktop Entry]
 _Name=Weight Tracker
-_Comment=Weight Tracker is is an app that allows you to track your weight, including BMI Status.
+_Comment=Weight Tracker is is an app that allows you to track your weight, including BMI Status and more statistics.
 Exec=@EXEC@
 Icon=@ICON@
 Terminal=false
