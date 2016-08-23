@@ -194,7 +194,7 @@ Page {
             }
             ExpandableListItem {
                 id: unitList
-                listViewHeight: units.gu(9)
+                listViewHeight: units.gu(10)
                 titleText.text: i18n.tr("Units")
                 titleText.color:Qt.darker( UbuntuColors.green)
                 subText.color: Qt.darker( UbuntuColors.green)
@@ -204,6 +204,7 @@ Page {
                     height: unitListItemLayout.height
                     ListItemLayout {
                         id: unitListItemLayout
+                        height: units.gu(5)
                         title.text: model.unit
                         title.color:Qt.darker( UbuntuColors.green)
                         padding { top: units.gu(1); bottom: units.gu(1) }
@@ -240,7 +241,7 @@ Page {
             ExpandableListItem {
                 visible: !settings.isFirstUse
                 id: clearHistoryList
-                listViewHeight: units.gu(18)
+                listViewHeight: units.gu(20)
                 titleText.text: i18n.tr("Clear History")
                 titleText.color:Qt.darker( UbuntuColors.green)
                 subText.color: Qt.darker( UbuntuColors.green)
@@ -250,6 +251,7 @@ Page {
                     height: clearHistoryListItemLayout.height
                     ListItemLayout {
                         id: clearHistoryListItemLayout
+                        height: units.gu(5)
                         title.text: model.period
                         title.color:Qt.darker( UbuntuColors.green)
                         padding { top: units.gu(1); bottom: units.gu(1) }
