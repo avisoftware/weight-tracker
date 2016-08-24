@@ -61,7 +61,7 @@ Page {
             Label {
                 id: name
                 height: implicitHeight + units.gu(3)
-                text: i18n.tr("Weight Tracker %1 (Beta)").arg("v0.5")
+                text: i18n.tr("Weight Tracker %1 (Beta)").arg("v0.5.1")
                 color:Qt.darker( UbuntuColors.green)
                 anchors.horizontalCenter: parent.horizontalCenter
                 textSize: Label.Large
