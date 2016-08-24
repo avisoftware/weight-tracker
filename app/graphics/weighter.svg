@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:export-ydpi="185.80646"
+   inkscape:export-xdpi="185.80646"
+   width="124"
+   height="124"
+   id="svg11300"
+   sodipodi:version="0.32"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="weighter.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.0"
+   style="display:inline;enable-background:new"
+   inkscape:export-filename="/home/avi/שולחן העבודה/splash.png">
+  <title
+     id="title3004">Suru Icon Template</title>
+  <sodipodi:namedview
+     stroke="#ef2929"
+     fill="#f57900"
+     id="base"
+     pagecolor="#ebebeb"
+     bordercolor="#666666"
+     borderopacity="0.25490196"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="55.892291"
+     inkscape:cy="39.884421"
+     inkscape:current-layer="layer5"
+     showgrid="false"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="1307"
+     inkscape:window-height="744"
+     inkscape:window-x="59"
+     inkscape:window-y="24"
+     width="400px"
+     height="300px"
+     inkscape:snap-nodes="true"
+     inkscape:snap-bbox="true"
+     gridtolerance="10000"
+     inkscape:object-nodes="true"
+     inkscape:snap-grids="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-maximized="1"
+     inkscape:bbox-nodes="true"
+     inkscape:bbox-paths="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-global="true">
+    <inkscape:grid
+       spacingy="1px"
+       spacingx="1px"
+       id="grid5883"
+       type="xygrid"
+       enabled="true"
+       visible="true"
+       empspacing="4"
+       snapvisiblegridlinesonly="true" />
+    <sodipodi:guide
+       position="256,256"
+       orientation="-0.70710678,0.70710678"
+       id="guide10813"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="124.49499,-0.44194174"
+       orientation="0.70710678,0.70710678"
+       id="guide10815"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="9,289"
+       orientation="1,0"
+       id="guide10817" />
+    <sodipodi:guide
+       position="114.6875,118.0625"
+       orientation="1,0"
+       id="guide10829" />
+    <sodipodi:guide
+       position="107.25,114.75"
+       orientation="0,1"
+       id="guide10843"
+       inkscape:label=""
+       inkscape:color="rgb(255,0,0)" />
+    <sodipodi:guide
+       position="25.75,9.25"
+       orientation="0,1"
+       id="guide10845"
+       inkscape:label=""
+       inkscape:color="rgb(255,0,0)" />
+  </sodipodi:namedview>
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient5460"
+       osb:paint="gradient">
+      <stop
+         style="stop-color:#e6e6e6;stop-opacity:1"
+         offset="0"
+         id="stop5462" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1"
+         offset="1"
+         id="stop5464" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5476"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#772953;stop-opacity:1;"
+         offset="0"
+         id="stop5478" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3045">
+      <stop
+         id="stop3047"
+         offset="0"
+         style="stop-color:#847784;stop-opacity:0.99607843" />
+      <stop
+         id="stop3049"
+         offset="1"
+         style="stop-color:#695f69;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4213">
+      <stop
+         style="stop-color:#b1d7f3;stop-opacity:1"
+         offset="0"
+         id="stop4215" />
+      <stop
+         style="stop-color:#8fafda;stop-opacity:1"
+         offset="1"
+         id="stop4217" />
+    </linearGradient>
+    <filter
+       id="filter4154"
+       style="color-interpolation-filters:sRGB">
+      <feComposite
+         operator="arithmetic"
+         k4="0"
+         result="composite1"
+         k1="0"
+         k2="1"
+         k3="0"
+         in2="SourceGraphic"
+         id="feComposite4156" />
+      <feColorMatrix
+         in="composite1"
+         result="colormatrix1"
+         values="0"
+         type="saturate"
+         id="feColorMatrix4158" />
+      <feFlood
+         flood-color="rgb(72,59,72)"
+         result="flood1"
+         id="feFlood4160" />
+      <feBlend
+         in="flood1"
+         in2="colormatrix1"
+         mode="multiply"
+         result="blend1"
+         id="feBlend4162" />
+      <feBlend
+         result="blend2"
+         in2="blend1"
+         mode="screen"
+         id="feBlend4164" />
+      <feColorMatrix
+         in="blend2"
+         result="colormatrix2"
+         values="1"
+         type="saturate"
+         id="feColorMatrix4166" />
+      <feComposite
+         in="colormatrix2"
+         in2="SourceGraphic"
+         result="composite2"
+         operator="in"
+         id="feComposite4168" />
+    </filter>
+    <clipPath
+       id="clipPath3062"
+       clipPathUnits="userSpaceOnUse">
+      <rect
+         y="-194.96773"
+         x="34.167744"
+         height="445.93549"
+         width="475.66452"
+         id="rect3064"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient3066);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:40;marker:none;enable-background:new" />
+    </clipPath>
+    <linearGradient
+       y2="288"
+       x2="256"
+       y1="50"
+       x1="256"
+       gradientTransform="matrix(1.8580645,0,0,1.8736786,4.4387126,-288.65166)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3066"
+       xlink:href="#linearGradient3045"
+       inkscape:collect="always" />
+  </defs>
+  <metadata
+     id="metadata4">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Sam Hewitt</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:source />
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/3.0/" />
+        <dc:title>Suru Icon Template</dc:title>
+        <dc:subject>
+          <rdf:Bag />
+        </dc:subject>
+        <dc:date />
+        <dc:rights>
+          <cc:Agent>
+            <dc:title />
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title />
+          </cc:Agent>
+        </dc:publisher>
+        <dc:identifier />
+        <dc:relation />
+        <dc:language />
+        <dc:coverage />
+        <dc:description />
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title />
+          </cc:Agent>
+        </dc:contributor>
+      </cc:Work>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     style="display:inline"
+     inkscape:groupmode="layer"
+     inkscape:label="Icon"
+     id="layer1"
+     transform="translate(0,-176)">
+    <g
+       style="display:inline"
+       inkscape:label="Background"
+       id="g3055"
+       inkscape:groupmode="layer">
+      <rect
+         style="opacity:1;fill:none;fill-opacity:0.33221477;fill-rule:nonzero;stroke:#808080;stroke-width:4.96302986;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect4752"
+         width="100.58408"
+         height="100.58408"
+         x="11.621912"
+         y="187.6844"
+         ry="10.587797" />
+      <g
+         id="g4766"
+         transform="matrix(0.36037812,0,0,0.36037812,-30.61313,227.90132)"
+         style="fill:none;fill-opacity:0;stroke:#808080;stroke-opacity:1">
+        <rect
+           ry="28.25"
+           y="-79"
+           x="189"
+           height="56.5"
+           width="135.5"
+           id="rect4754"
+           style="opacity:1;fill:none;fill-opacity:0;fill-rule:nonzero;stroke:#808080;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <path
+           sodipodi:nodetypes="cccc"
+           inkscape:connector-curvature="0"
+           id="path4756"
+           d="m 221.70588,-73.555144 0,0 0.59926,0 0,17.555144"
+           style="fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#808080;stroke-width:8.26303768;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           sodipodi:nodetypes="cc"
+           inkscape:connector-curvature="0"
+           id="path4758"
+           d="m 255.77759,-76 0,20"
+           style="fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#808080;stroke-width:8.26303768;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           sodipodi:nodetypes="cc"
+           inkscape:connector-curvature="0"
+           id="path4760"
+           d="m 289.25,-76 0,20"
+           style="fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#808080;stroke-width:8.26303768;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           sodipodi:nodetypes="cccc"
+           inkscape:connector-curvature="0"
+           id="path4764"
+           d="m 237,-30.057672 39.5,0 -19.75,-16.69239 z"
+           style="fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#808080;stroke-width:3.67246127;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      </g>
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer5"
+       inkscape:label="Pictogram"
+       style="display:inline" />
+  </g>
+</svg>
