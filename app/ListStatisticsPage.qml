@@ -186,13 +186,13 @@ Page {
         }else{
             unitStr= i18n.tr("LB");
         }
-        avgLastWeek.text= Storage.getWeightAvgOnPeriod("lastWeek",settings.userId)+unitStr;
-        avgLastMonth.text= Storage.getWeightAvgOnPeriod("lastMonth",settings.userId)+unitStr;
-        avgLastYear.text= Storage.getWeightAvgOnPeriod("lastYear",settings.userId)+unitStr;
-        var cLastWeek=Storage.getWeightChangesOnPeriod("lastWeek",settings.userId)
-         var cLastMonth=Storage.getWeightChangesOnPeriod("lastMonth",settings.userId)
-         var cLastYear=Storage.getWeightChangesOnPeriod("lastYear",settings.userId)
-         var cFromStart=Storage.getWeightChangesOnPeriod("all",settings.userId)
+        avgLastWeek.text= Storage.getWeightAvgOnPeriod("lastWeek",settings.userId).toFixed(2)+unitStr;
+        avgLastMonth.text= Storage.getWeightAvgOnPeriod("lastMonth",settings.userId).toFixed(2)+unitStr;
+        avgLastYear.text= Storage.getWeightAvgOnPeriod("lastYear",settings.userId).toFixed(2)+unitStr;
+        var cLastWeek=Storage.getWeightChangesOnPeriod("lastWeek",settings.userId).toFixed(2)
+         var cLastMonth=Storage.getWeightChangesOnPeriod("lastMonth",settings.userId).toFixed(2)
+         var cLastYear=Storage.getWeightChangesOnPeriod("lastYear",settings.userId).toFixed(2)
+         var cFromStart=Storage.getWeightChangesOnPeriod("all",settings.userId).toFixed(2)
         changesLastWeek.text=cLastWeek>0?"+"+ cLastWeek+unitStr:cLastWeek+unitStr;
         changesLastMonth.text= cLastMonth>0?"+"+ cLastMonth+unitStr:cLastMonth+unitStr;
         changesLastYear.text= cLastYear>0?"+"+ cLastYear+unitStr:cLastYear+unitStr;

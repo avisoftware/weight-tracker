@@ -145,40 +145,40 @@ Item{
              periodStr=i18n.tr("last week")
             if(changeLastWeek<=0){
                 strTitle=i18n.tr("You loss %1").arg(periodStr)
-                strStat=changeLastWeek*(-1)
+                strStat=(changeLastWeek*(-1)).toFixed(2)
             }else{
                 strTitle=i18n.tr("You added %1").arg(periodStr)
-                strStat=changeLastWeek
+                strStat=changeLastWeek.toFixed(2)
             }
         }else if(cardsArray[index]==="changeLastMonth"){
             var changeLastMonth =dataArray[6]
              periodStr=i18n.tr("last month")
             if(changeLastMonth<=0){
                 strTitle=i18n.tr("You loss %1").arg(periodStr)
-                strStat=changeLastMonth*(-1)
+                strStat=(changeLastMonth*(-1)).toFixed(2)
             }else{
                 strTitle=i18n.tr("You added %1").arg(periodStr)
-                strStat=changeLastMonth
+                strStat=changeLastMonth.toFixed(2)
             }
         }else if(cardsArray[index]==="changeLastYear"){
             var changeLastYear =dataArray[7]
              periodStr=i18n.tr("last year")
             if(changeLastYear<=0){
                 strTitle=i18n.tr("You loss %1").arg(periodStr)
-                strStat=changeLastYear*(-1)
+                strStat=(changeLastYear*(-1)).toFixed(2)
             }else{
                 strTitle=i18n.tr("You added %1").arg(periodStr)
-                strStat=changeLastYear
+                strStat=changeLastYear.toFixed(2)
             }
         }else if(cardsArray[index]==="changeFromStart"){
             var changeFromStart =dataArray[8]
              periodStr=i18n.tr("from start")
             if(changeFromStart<=0){
                 strTitle=i18n.tr("You loss %1").arg(periodStr)
-                strStat=changeFromStart*(-1)
+                strStat=(changeFromStart*(-1)).toFixed(2)
             }else{
                 strTitle=i18n.tr("You added %1").arg(periodStr)
-                strStat=changeFromStart
+                strStat=changeFromStart.toFixed(2)
             }
         }
         statisticTitelLabel.text = strTitle
